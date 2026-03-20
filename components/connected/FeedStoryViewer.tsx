@@ -41,7 +41,7 @@ function StoryFillImage({ src, alt }: { src: string; alt: string }) {
       alt={alt}
       fill
       className="object-cover"
-      sizes="100vw"
+      sizes="(max-width:430px) 100vw, 430px"
       priority
     />
   );
@@ -176,7 +176,7 @@ export function FeedStoryViewer({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex flex-col bg-black"
+      className="fixed left-1/2 top-0 z-[80] flex h-dvh w-full max-w-[430px] -translate-x-1/2 flex-col bg-black shadow-2xl"
       role="dialog"
       aria-modal="true"
       aria-label={`Stories — ${spotTitle}`}
@@ -193,7 +193,7 @@ export function FeedStoryViewer({
           >
             <X className="h-6 w-6" strokeWidth={2.5} />
           </button>
-          <p className="pointer-events-none absolute left-1/2 top-2 max-w-[min(14rem,70vw)] -translate-x-1/2 truncate text-center text-sm font-semibold text-white drop-shadow-md">
+          <p className="pointer-events-none absolute left-1/2 top-2 max-w-[min(14rem,calc(100%-5.5rem))] -translate-x-1/2 truncate text-center text-sm font-semibold text-white drop-shadow-md">
             {spotTitle}
           </p>
         </div>
