@@ -194,7 +194,13 @@ export function SettingsScreen() {
       <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-4 pb-28">
         <div className="flex flex-col items-center rounded-2xl bg-white py-6 shadow-sm ring-1 ring-[#e8e4dc]">
           <div className="relative h-20 w-20 overflow-hidden rounded-full ring-2 ring-[#7a9a7a]">
-            <Image src={user.avatar} alt="" fill className="object-cover" sizes="80px" />
+            <Image
+              src={user.avatarSettings ?? user.avatar}
+              alt=""
+              fill
+              className="object-cover object-[center_28%]"
+              sizes="80px"
+            />
           </div>
           <p className="mt-2 font-semibold text-neutral-900">{user.name}</p>
           <button type="button" className="mt-1 text-sm font-medium text-[#4a6b4a]">

@@ -1,6 +1,8 @@
 export const user = {
   name: "Claire Trundle",
   avatar: "/profile/claire-trundle.png",
+  /** Wider framing (cropper-style) — Settings profile photo only */
+  avatarSettings: "/profile/claire-trundle-settings.png",
   sharing: "Sharing with Close Friends",
 };
 
