@@ -1,13 +1,21 @@
 "use client";
 
-import { Check, Clock, Phone, Plus, Search, X } from "lucide-react";
+import { Check, Phone, Plus, Search } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import {
+  FriendsTimePickerModal,
+  type FriendsTimePick,
+} from "@/components/connected/FriendsTimePickerModal";
+import { FriendProfileModal } from "@/components/connected/FriendProfileModal";
 import { ConnectedStatusBar } from "@/components/connected/ConnectedStatusBar";
 import {
-  friendIdsFreeAtTimeSlot,
+  buildFriendsPickerDays,
+  formatFriendsScreenTimeRange,
   friends,
-  friendsScreenTimeSlots,
+  friendsScreenClockToMinutes,
+  friendsScreenFriendIdsForMinutesRange,
+  friendsScreenSlotSummaryForRange,
 } from "@/lib/connected/mock";
 
 type Filter = "free" | "all" | "time";
@@ -16,7 +24,6 @@ type Props = {
   title?: string;
   showInviteButtons?: boolean;
   onInviteAll?: () => void;
-  /** Shown after tapping Invite on Feed */
   inviteFromFeed?: boolean;
   onDismissInviteHint?: () => void;
   onCreateGroup?: (memberNames: string[]) => void;
@@ -31,9 +38,24 @@ export function FriendsScreen({
   onCreateGroup,
 }: Props) {
   const [filter, setFilter] = useState<Filter>("free");
-  const [timeSlotId, setTimeSlotId] = useState<string | null>(null);
   const [timePickerOpen, setTimePickerOpen] = useState(false);
+  const [selectedDateId, setSelectedDateId] = useState<string | null>(null);
+  const [timePick, setTimePick] = useState<FriendsTimePick | null>(null);
   const [groupPick, setGroupPick] = useState<Set<string>>(() => new Set());
+  const [profileFriendId, setProfileFriendId] = useState<string | null>(null);
+
+  const friendPickerDates = useMemo(
+    () => buildFriendsPickerDays(new Date(), 28),
+    [timePickerOpen],
+  );
+
+  const profileFriend = useMemo(
+    () =>
+      profileFriendId
+        ? (friends.find((f) => f.id === profileFriendId) ?? null)
+        : null,
+    [profileFriendId],
+  );
 
   const chips: { id: Filter; label: string }[] = [
     { id: "free", label: "Free Now" },
@@ -41,21 +63,55 @@ export function FriendsScreen({
     { id: "time", label: "Select time" },
   ];
 
-  const slotLabel = useMemo(
-    () => friendsScreenTimeSlots.find((s) => s.id === timeSlotId)?.label ?? null,
-    [timeSlotId],
-  );
+  const selectedDateLabel = useMemo(() => {
+    if (!selectedDateId) return null;
+    const d = friendPickerDates.find((x) => x.id === selectedDateId);
+    return d ? `${d.day} ${d.month} ${d.date}` : null;
+  }, [selectedDateId, friendPickerDates]);
+
+  const timeRangeLabel = useMemo(() => {
+    if (!timePick) return null;
+    return formatFriendsScreenTimeRange(timePick.start, timePick.end);
+  }, [timePick]);
+
+  const slotLabel = useMemo(() => {
+    if (!timePick) return null;
+    return friendsScreenSlotSummaryForRange(
+      friendsScreenClockToMinutes(
+        timePick.start.hour12,
+        timePick.start.minute,
+        timePick.start.ampm,
+      ),
+      friendsScreenClockToMinutes(
+        timePick.end.hour12,
+        timePick.end.minute,
+        timePick.end.ampm,
+      ),
+    );
+  }, [timePick]);
 
   const friendsForView = useMemo(() => {
     if (filter === "all") return friends;
     if (filter === "free") return friends.filter((f) => f.free);
-    if (filter === "time" && timeSlotId) {
-      const ids = new Set(friendIdsFreeAtTimeSlot[timeSlotId] ?? []);
+    if (filter === "time" && timePick) {
+      const startMin = friendsScreenClockToMinutes(
+        timePick.start.hour12,
+        timePick.start.minute,
+        timePick.start.ampm,
+      );
+      const endMin = friendsScreenClockToMinutes(
+        timePick.end.hour12,
+        timePick.end.minute,
+        timePick.end.ampm,
+      );
+      const ids = new Set(
+        friendsScreenFriendIdsForMinutesRange(startMin, endMin),
+      );
       return friends.filter((f) => ids.has(f.id));
     }
     if (filter === "time") return [];
     return friends;
-  }, [filter, timeSlotId]);
+  }, [filter, timePick]);
 
   const freeBubbles = friendsForView;
 
@@ -66,7 +122,13 @@ export function FriendsScreen({
         <h1 className="text-xl font-bold text-neutral-900">
           {title ?? "Friends"}
         </h1>
-        <span className="text-sm text-neutral-500">Sat June 1</span>
+        <span className="text-sm text-neutral-500">
+          {filter === "time" && selectedDateLabel
+            ? selectedDateLabel
+            : filter === "time" && friendPickerDates[0]
+              ? `${friendPickerDates[0].day} ${friendPickerDates[0].month} ${friendPickerDates[0].date}`
+              : "Sat June 1"}
+        </span>
       </header>
 
       {!showInviteButtons && (
@@ -81,7 +143,8 @@ export function FriendsScreen({
                   setTimePickerOpen(true);
                 } else {
                   setFilter(c.id);
-                  setTimeSlotId(null);
+                  setSelectedDateId(null);
+                  setTimePick(null);
                 }
               }}
               className={`rounded-full px-4 py-2 text-sm font-semibold ${
@@ -90,94 +153,56 @@ export function FriendsScreen({
                   : "bg-white text-neutral-600 ring-1 ring-[#e0dcd0]"
               }`}
             >
-              {c.id === "time" && timeSlotId && filter === "time"
-                ? `Select time · ${slotLabel}`
+              {c.id === "time" && timePick && filter === "time"
+                ? `Select time · ${formatFriendsScreenTimeRange(timePick.start, timePick.end)}`
                 : c.label}
             </button>
           ))}
         </div>
       )}
 
-      {!showInviteButtons && (
+      {!showInviteButtons && filter === "time" && (
         <div className="mx-4 mb-3 rounded-xl bg-[#5a7d5a] px-4 py-3 text-center text-sm font-bold text-white">
-          {filter === "time" && timeSlotId ? (
+          {timePick && selectedDateLabel && timeRangeLabel ? (
             <>
-              SAT JUNE 1 · {slotLabel?.toUpperCase()} ·{" "}
+              {selectedDateLabel.toUpperCase()} ·{" "}
+              {timeRangeLabel.toUpperCase()}
+              {slotLabel ? ` · ${slotLabel.toUpperCase()}` : ""} ·{" "}
               {friendsForView.length} FRIEND
               {friendsForView.length !== 1 ? "S" : ""} FREE
             </>
-          ) : filter === "time" ? (
-            <>PICK A TIME · SAT JUNE 1</>
           ) : (
-            <>FREE THIS WEEKEND · 36 FRIENDS</>
+            <>PICK A DATE &amp; TIME</>
           )}
         </div>
       )}
 
       {timePickerOpen && !showInviteButtons && (
-        <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 pb-8"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="time-picker-title"
-        >
-          <div className="w-full max-w-[400px] overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-[#e8e4dc]">
-            <div className="flex items-center justify-between border-b border-[#e8e4dc] px-4 py-3">
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-[#5a7d5a]" />
-                <h2
-                  id="time-picker-title"
-                  className="text-base font-bold text-neutral-900"
-                >
-                  Select time · Sat June 1
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setTimePickerOpen(false)}
-                className="rounded-full p-2 text-neutral-500 hover:bg-neutral-100"
-                aria-label="Close"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <p className="px-4 pt-3 text-sm text-neutral-500">
-              Friends free during that window will show below.
-            </p>
-            <ul className="max-h-[min(52vh,320px)] overflow-y-auto p-2">
-              {friendsScreenTimeSlots.map((slot) => (
-                <li key={slot.id}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setTimeSlotId(slot.id);
-                      setTimePickerOpen(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-base font-semibold text-neutral-900 hover:bg-[#eef4ee] active:bg-[#dce8dc]"
-                  >
-                    {slot.label}
-                    <span className="text-sm font-medium text-[#5a7d5a]">
-                      {(friendIdsFreeAtTimeSlot[slot.id] ?? []).length} free
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <FriendsTimePickerModal
+          open={timePickerOpen}
+          onClose={() => setTimePickerOpen(false)}
+          dates={friendPickerDates}
+          initial={timePick}
+          onApply={(pick) => {
+            setTimePick(pick);
+            setSelectedDateId(pick.dateId);
+          }}
+        />
       )}
 
       <div className="mb-3 flex min-h-[88px] gap-3 overflow-x-auto px-4 pb-1">
-        {filter === "time" && !timeSlotId && (
+        {filter === "time" && !timePick && (
           <p className="flex items-center px-1 text-sm text-neutral-500">
-            Choose a time slot to see who’s free.
+            Choose a start and end time to see who’s free.
           </p>
         )}
         {freeBubbles.map((f) => (
           <button
             key={f.id}
             type="button"
-            className="flex shrink-0 flex-col items-center gap-1"
+            onClick={() => setProfileFriendId(f.id)}
+            className="flex shrink-0 flex-col items-center gap-1 rounded-xl pb-1 pt-0.5 outline-none ring-[#5a7d5a] focus-visible:ring-2"
+            aria-label={`${f.name} profile`}
           >
             <div className="relative h-16 w-16 overflow-hidden rounded-full ring-2 ring-[#c5d4c5]">
               <Image src={f.avatar} alt="" fill className="object-cover" sizes="64px" />
@@ -223,13 +248,14 @@ export function FriendsScreen({
       </div>
 
       <div className="min-h-0 flex-1 space-y-2 overflow-y-auto px-4 pb-28">
-        {filter === "time" && !timeSlotId && (
+        {filter === "time" && !timePick && (
           <p className="rounded-xl bg-white px-4 py-8 text-center text-sm leading-relaxed text-neutral-500 ring-1 ring-[#e8e4dc]">
             Tap <span className="font-semibold text-[#5a7d5a]">Select time</span>{" "}
-            and pick a window — friends free then appear below.
+            and set a start and end time — friends free for that whole range
+            appear below.
           </p>
         )}
-        {filter === "time" && timeSlotId && friendsForView.length === 0 && (
+        {filter === "time" && timePick && friendsForView.length === 0 && (
           <p className="rounded-xl bg-white px-4 py-6 text-center text-sm text-neutral-500 ring-1 ring-[#e8e4dc]">
             No friends free in that window.
           </p>
@@ -239,17 +265,24 @@ export function FriendsScreen({
             key={f.id}
             className="flex items-center gap-2 rounded-xl bg-white p-3 shadow-sm ring-1 ring-[#e8e4dc]"
           >
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
-              <Image src={f.avatar} alt="" fill className="object-cover" sizes="48px" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="font-semibold text-neutral-900">{f.name}</p>
-              <p
-                className={`text-sm ${f.free ? "text-[#4a6b4a]" : "text-amber-700"}`}
-              >
-                {f.status}
-              </p>
-            </div>
+            <button
+              type="button"
+              onClick={() => setProfileFriendId(f.id)}
+              className="flex min-w-0 flex-1 items-center gap-2 rounded-lg text-left outline-none ring-[#5a7d5a] focus-visible:ring-2"
+              aria-label={`${f.name} profile`}
+            >
+              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
+                <Image src={f.avatar} alt="" fill className="object-cover" sizes="48px" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-neutral-900">{f.name}</p>
+                <p
+                  className={`text-sm ${f.free ? "text-[#4a6b4a]" : "text-amber-700"}`}
+                >
+                  {f.status}
+                </p>
+              </div>
+            </button>
             {f.isNew && !showInviteButtons && (
               <span className="shrink-0 rounded-full bg-[#eef4ee] px-2 py-0.5 text-[10px] font-semibold text-[#4a6b4a]">
                 New
@@ -334,6 +367,11 @@ export function FriendsScreen({
           </button>
         </div>
       )}
+
+      <FriendProfileModal
+        friend={profileFriend}
+        onClose={() => setProfileFriendId(null)}
+      />
     </div>
   );
 }

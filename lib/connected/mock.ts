@@ -5,6 +5,62 @@ export const user = {
   sharing: "Sharing with Close Friends",
 };
 
+export type UserAboutMeFields = {
+  phone: string;
+  email: string;
+  livingIn: string;
+  hometown: string;
+  school: string;
+  job: string;
+};
+
+export const userAboutMeDefaults: UserAboutMeFields = {
+  phone: "+1 (917) 555-0142",
+  email: "claire.m@email.com",
+  livingIn: "Brooklyn, NY",
+  hometown: "Boston, MA",
+  school: "Parsons School of Design",
+  job: "Product designer",
+};
+
+export type SettingsSocialPlatform =
+  | "instagram"
+  | "x"
+  | "tiktok"
+  | "snapchat"
+  | "facebook"
+  | "youtube";
+
+export type UserSocialEntry = {
+  enabled: boolean;
+  handle: string;
+};
+
+export const SETTINGS_SOCIAL_PLATFORMS: {
+  key: SettingsSocialPlatform;
+  label: string;
+  placeholder: string;
+}[] = [
+  { key: "instagram", label: "Instagram", placeholder: "@username or URL" },
+  { key: "x", label: "X", placeholder: "@handle" },
+  { key: "tiktok", label: "TikTok", placeholder: "@handle" },
+  { key: "snapchat", label: "Snapchat", placeholder: "Username" },
+  { key: "facebook", label: "Facebook", placeholder: "Profile name or URL" },
+  { key: "youtube", label: "YouTube", placeholder: "@channel or URL" },
+];
+
+export const userSocialDefaults: Record<
+  SettingsSocialPlatform,
+  UserSocialEntry
+> = {
+  instagram: { enabled: true, handle: "@clairem" },
+  x: { enabled: true, handle: "@clairem_nyc" },
+  tiktok: { enabled: false, handle: "" },
+  snapchat: { enabled: false, handle: "" },
+  facebook: { enabled: false, handle: "" },
+  youtube: { enabled: true, handle: "@ClaireMakes" },
+};
+
 const A = {
   jake: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
   maya: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
@@ -380,6 +436,80 @@ export const profileDaySections: ProfileDaySection[] = [
   },
 ];
 
+/** Friends tab — date row (legacy / Home strip) */
+export type FriendsScreenDateOption = {
+  id: string;
+  day: string;
+  date: number;
+  month: string;
+};
+
+export const friendsScreenSelectableDates: FriendsScreenDateOption[] =
+  weekStrip.map((w) => ({
+    id: w.detailId,
+    day: w.day,
+    date: w.date,
+    month: w.month,
+  }));
+
+const FRIENDS_PICKER_DAY_NAMES = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+] as const;
+const FRIENDS_PICKER_MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+] as const;
+
+function friendsPickerLocalYmd(d: Date): string {
+  const y = d.getFullYear();
+  const mo = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${mo}-${day}`;
+}
+
+export function buildFriendsPickerDays(
+  from: Date = new Date(),
+  count = 28,
+): FriendsScreenDateOption[] {
+  const y = from.getFullYear();
+  const m = from.getMonth();
+  const day = from.getDate();
+  const out: FriendsScreenDateOption[] = [];
+  const n = Math.max(1, Math.min(count, 366));
+  for (let i = 0; i < n; i++) {
+    const d = new Date(y, m, day + i);
+    out.push({
+      id: friendsPickerLocalYmd(d),
+      day: FRIENDS_PICKER_DAY_NAMES[d.getDay()],
+      date: d.getDate(),
+      month: FRIENDS_PICKER_MONTH_NAMES[d.getMonth()],
+    });
+  }
+  return out;
+}
+
+export function buildFriendsPickerThreeDays(
+  from: Date = new Date(),
+): FriendsScreenDateOption[] {
+  return buildFriendsPickerDays(from, 3);
+}
+
 /** Friends tab — pick a window on Sat June 1 to see who’s free */
 export const friendsScreenTimeSlots = [
   { id: "s1", label: "10am – 12pm" },
@@ -389,6 +519,60 @@ export const friendsScreenTimeSlots = [
   { id: "s5", label: "6 – 8pm" },
   { id: "s6", label: "8 – 10pm" },
 ] as const;
+
+const FRIENDS_SCREEN_SLOT_BOUNDS: { id: string; start: number; end: number }[] =
+  [
+    { id: "s1", start: 10 * 60, end: 12 * 60 },
+    { id: "s2", start: 12 * 60, end: 14 * 60 },
+    { id: "s3", start: 14 * 60, end: 16 * 60 },
+    { id: "s4", start: 16 * 60, end: 18 * 60 },
+    { id: "s5", start: 18 * 60, end: 20 * 60 },
+    { id: "s6", start: 20 * 60, end: 22 * 60 },
+  ];
+
+export function friendsScreenClockToMinutes(
+  hour12: number,
+  minute: number,
+  ampm: "AM" | "PM",
+): number {
+  const h24 =
+    hour12 === 12
+      ? ampm === "AM"
+        ? 0
+        : 12
+      : ampm === "PM"
+        ? hour12 + 12
+        : hour12;
+  return h24 * 60 + minute;
+}
+
+export function friendsScreenTimeToSlotId(
+  hour12: number,
+  minute: number,
+  ampm: "AM" | "PM",
+): string {
+  const mins = friendsScreenClockToMinutes(hour12, minute, ampm);
+  for (const s of FRIENDS_SCREEN_SLOT_BOUNDS) {
+    if (mins >= s.start && mins < s.end) return s.id;
+  }
+  if (mins < FRIENDS_SCREEN_SLOT_BOUNDS[0].start) return "s1";
+  return "s6";
+}
+
+export function formatFriendsScreenClock(
+  hour12: number,
+  minute: number,
+  ampm: "AM" | "PM",
+): string {
+  return `${hour12}:${minute.toString().padStart(2, "0")} ${ampm}`;
+}
+
+export function formatFriendsScreenTimeRange(
+  start: { hour12: number; minute: number; ampm: "AM" | "PM" },
+  end: { hour12: number; minute: number; ampm: "AM" | "PM" },
+): string {
+  return `${formatFriendsScreenClock(start.hour12, start.minute, start.ampm)} – ${formatFriendsScreenClock(end.hour12, end.minute, end.ampm)}`;
+}
 
 /** Friend ids free during each slot (mock) */
 export const friendIdsFreeAtTimeSlot: Record<string, string[]> = {
@@ -400,14 +584,67 @@ export const friendIdsFreeAtTimeSlot: Record<string, string[]> = {
   s6: ["1", "2"],
 };
 
+export function friendsScreenFriendIdsForMinutesRange(
+  startMin: number,
+  endMin: number,
+): string[] {
+  if (endMin <= startMin) return [];
+  const overlapping = FRIENDS_SCREEN_SLOT_BOUNDS.filter(
+    (s) => s.start < endMin && s.end > startMin,
+  );
+  if (overlapping.length === 0) return [];
+  let acc = new Set<string>(
+    friendIdsFreeAtTimeSlot[overlapping[0].id] ?? [],
+  );
+  for (let i = 1; i < overlapping.length; i++) {
+    const ids = new Set(friendIdsFreeAtTimeSlot[overlapping[i].id] ?? []);
+    acc = new Set([...acc].filter((id) => ids.has(id)));
+  }
+  return [...acc];
+}
+
+/** Human-readable demo slot window(s) overlapping a minute range. */
+export function friendsScreenSlotSummaryForRange(
+  startMin: number,
+  endMin: number,
+): string | null {
+  if (endMin <= startMin) return null;
+  const overlapping = FRIENDS_SCREEN_SLOT_BOUNDS.filter(
+    (s) => s.start < endMin && s.end > startMin,
+  );
+  if (overlapping.length === 0) return null;
+  const labels = overlapping
+    .map((s) => friendsScreenTimeSlots.find((t) => t.id === s.id)?.label)
+    .filter(Boolean) as string[];
+  if (labels.length === 0) return null;
+  if (labels.length === 1) return labels[0];
+  return `${labels[0]} – ${labels[labels.length - 1]}`;
+}
+
+export type FriendProfile = {
+  livingIn: string;
+  homeTown: string;
+  email: string;
+  instagram?: string;
+  x?: string;
+  tiktok?: string;
+  snapchat?: string;
+  facebook?: string;
+  youtube?: string;
+  phone?: string;
+  school?: string;
+  job?: string;
+  zodiac?: string;
+};
+
 export type Friend = {
   id: string;
   name: string;
   avatar: string;
   status: string;
   free: boolean;
-  /** E.164-ish for tel: — opens Phone app (often surfaces saved contact) */
   phone: string;
+  profile: FriendProfile;
   isNew?: boolean;
   emoji?: string;
 };
@@ -423,6 +660,21 @@ export const friends: Friend[] = [
     phone: "+12125550101",
     isNew: true,
     emoji: "🎵",
+    profile: {
+      livingIn: "Brooklyn, NY",
+      homeTown: "Austin, TX",
+      email: "jake.rivera@email.com",
+      instagram: "@jakerivera",
+      x: "@jakeriv",
+      tiktok: "@jakeplays",
+      snapchat: "jake.r",
+      facebook: "jake.rivera.music",
+      youtube: "@JakeRiveraVlogs",
+      phone: "+1 (212) 555-0101",
+      school: "NYU",
+      job: "Product designer",
+      zodiac: "Leo",
+    },
   },
   {
     id: "2",
@@ -433,6 +685,16 @@ export const friends: Friend[] = [
     free: true,
     phone: "+12125550102",
     emoji: "❤️",
+    profile: {
+      livingIn: "Manhattan, NY",
+      homeTown: "San Francisco, CA",
+      email: "maya.chan@email.com",
+      instagram: "@mayac",
+      x: "@mayachan",
+      school: "Columbia University",
+      job: "Software engineer",
+      zodiac: "Pisces",
+    },
   },
   {
     id: "3",
@@ -443,6 +705,13 @@ export const friends: Friend[] = [
     free: false,
     phone: "+12125550103",
     emoji: "🍜",
+    profile: {
+      livingIn: "Jersey City, NJ",
+      homeTown: "Seoul, South Korea",
+      email: "alex.park@email.com",
+      tiktok: "@alexeats",
+      job: "Line cook",
+    },
   },
   {
     id: "4",
@@ -453,6 +722,16 @@ export const friends: Friend[] = [
     free: true,
     phone: "+12125550104",
     emoji: "⭐",
+    profile: {
+      livingIn: "Los Angeles, CA",
+      homeTown: "Portland, OR",
+      email: "kai.forbes@email.com",
+      instagram: "@kaiforbes",
+      youtube: "KaiForbes",
+      phone: "+1 (212) 555-0104",
+      school: "UCLA",
+      zodiac: "Sagittarius",
+    },
   },
 ];
 
@@ -666,6 +945,15 @@ export const discoverEvents: EventItem[] = [
     image:
       "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=240&fit=crop",
   },
+  {
+    id: "outdoor",
+    title: "Outdoor Summer Concert",
+    subtitle: "3 friends saved it",
+    time: "Sat Jun 8 · 6pm",
+    friendsGoing: 3,
+    image:
+      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=240&fit=crop",
+  },
 ];
 
 export const intentEvent = {
@@ -682,6 +970,8 @@ export const intentEvent = {
 
 export type SavedItem = {
   id: string;
+  /** Discover / feed event id — story posts and “here now” attach to this spot */
+  eventId: string;
   title: string;
   meta: string;
   icon: "music" | "bowl" | "mountain";
@@ -692,6 +982,7 @@ export type SavedItem = {
 export const savedItems: SavedItem[] = [
   {
     id: "s1",
+    eventId: "outdoor",
     title: "Outdoor Concert",
     meta: "Sat Jun 8 · 6pm · 4 going",
     icon: "music",
@@ -700,6 +991,7 @@ export const savedItems: SavedItem[] = [
   },
   {
     id: "s2",
+    eventId: "food-hall",
     title: "Ramen Night",
     meta: "Anytime · 2 friends also saved",
     icon: "bowl",
@@ -708,6 +1000,7 @@ export const savedItems: SavedItem[] = [
   },
   {
     id: "s3",
+    eventId: "run-club",
     title: "Catskills Hike",
     meta: "Someday · 5 friends interested",
     icon: "mountain",
@@ -721,26 +1014,248 @@ export function feedEventIsRestaurantOption(eventId: string): boolean {
   return ["rosemary", "food-hall", "trivia", "brunch"].includes(eventId);
 }
 
-export type FeedPost =
-  | {
-      id: string;
-      type: "event";
-      /** Matches slot / discover event ids — deep link from Profile */
-      eventId: string;
-      author: string;
-      avatar: string;
-      headline: string;
-      sub: string;
-    }
-  | {
-      id: string;
-      type: "photo";
-      author: string;
-      avatar: string;
-      place: string;
-      sub: string;
-      image: string;
-    };
+export function discoverEventById(id: string): EventItem | undefined {
+  return discoverEvents.find((e) => e.id === id);
+}
+
+/** Past story-style posts at a spot (shown in Feed spot archive grid). */
+export type FeedSpotPastPost = {
+  id: string;
+  imageUrl: string;
+  authorName: string;
+  timeLabel: string;
+};
+
+const _spot = (
+  id: string,
+  imageUrl: string,
+  authorName: string,
+  timeLabel: string,
+): FeedSpotPastPost => ({ id, imageUrl, authorName, timeLabel });
+
+/** Grids keyed by the same `eventId` as feed / discover. */
+export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
+  prospect: [
+    _spot(
+      "sp-pr-1",
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "2d ago",
+    ),
+    _spot(
+      "sp-pr-2",
+      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "1w ago",
+    ),
+    _spot(
+      "sp-pr-3",
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "2w ago",
+    ),
+    _spot(
+      "sp-pr-4",
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
+      "Alex Park",
+      "3w ago",
+    ),
+    _spot(
+      "sp-pr-5",
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop",
+      "Claire M.",
+      "1mo ago",
+    ),
+    _spot(
+      "sp-pr-6",
+      "https://images.unsplash.com/photo-1429963354344-1fa4872f3157?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "1mo ago",
+    ),
+  ],
+  outdoor: [
+    _spot(
+      "sp-od-1",
+      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "Yesterday",
+    ),
+    _spot(
+      "sp-od-2",
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "3d ago",
+    ),
+    _spot(
+      "sp-od-3",
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "1w ago",
+    ),
+  ],
+  rosemary: [
+    _spot(
+      "sp-ro-1",
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "Yesterday",
+    ),
+    _spot(
+      "sp-ro-2",
+      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "4d ago",
+    ),
+    _spot(
+      "sp-ro-3",
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "1w ago",
+    ),
+    _spot(
+      "sp-ro-4",
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=300&h=300&fit=crop",
+      "Alex Park",
+      "2w ago",
+    ),
+  ],
+  brunch: [
+    _spot(
+      "sp-br-1",
+      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "Last night",
+    ),
+    _spot(
+      "sp-br-2",
+      "https://images.unsplash.com/photo-1555992336-fb0d29498d13?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "3d ago",
+    ),
+    _spot(
+      "sp-br-3",
+      "https://images.unsplash.com/photo-1544148103-07737bfbad88?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "1w ago",
+    ),
+  ],
+  "food-hall": [
+    _spot(
+      "sp-fh-1",
+      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "5d ago",
+    ),
+    _spot(
+      "sp-fh-2",
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "1w ago",
+    ),
+    _spot(
+      "sp-fh-3",
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300&h=300&fit=crop",
+      "Alex Park",
+      "2w ago",
+    ),
+    _spot(
+      "sp-fh-4",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "3w ago",
+    ),
+  ],
+  trivia: [
+    _spot(
+      "sp-tr-1",
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "2d ago",
+    ),
+    _spot(
+      "sp-tr-2",
+      "https://images.unsplash.com/photo-1585699324551-f6f0bb35f28f?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "1w ago",
+    ),
+    _spot(
+      "sp-tr-3",
+      "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "2w ago",
+    ),
+  ],
+  "park-soccer": [
+    _spot(
+      "sp-ps-1",
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=300&fit=crop",
+      "Alex Park",
+      "Today",
+    ),
+    _spot(
+      "sp-ps-2",
+      "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "3d ago",
+    ),
+    _spot(
+      "sp-ps-3",
+      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=300&h=300&fit=crop",
+      "Kai Forbes",
+      "1w ago",
+    ),
+  ],
+  "run-club": [
+    _spot(
+      "sp-rc-1",
+      "https://images.unsplash.com/photo-1552674605-5d2178b85608?w=300&h=300&fit=crop",
+      "Maya Chan",
+      "Sun",
+    ),
+    _spot(
+      "sp-rc-2",
+      "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=300&h=300&fit=crop",
+      "Jake Rivera",
+      "Last week",
+    ),
+  ],
+};
+
+const feedSpotPastPostsFallback: FeedSpotPastPost[] = [
+  _spot(
+    "sp-fb-1",
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop",
+    "Friend",
+    "1w ago",
+  ),
+  _spot(
+    "sp-fb-2",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop",
+    "Friend",
+    "2w ago",
+  ),
+  _spot(
+    "sp-fb-3",
+    "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=300&h=300&fit=crop",
+    "Friend",
+    "3w ago",
+  ),
+];
+
+export function feedSpotPastPostsForEvent(eventId: string): FeedSpotPastPost[] {
+  return feedSpotPastPostsByEventId[eventId] ?? feedSpotPastPostsFallback;
+}
+
+export type FeedPost = {
+  id: string;
+  type: "event";
+  /** Matches slot / discover event ids — deep link from Profile */
+  eventId: string;
+  author: string;
+  avatar: string;
+  headline: string;
+  sub: string;
+};
 
 export const feedPosts: FeedPost[] = [
   {
@@ -772,17 +1287,6 @@ export const feedPosts: FeedPost[] = [
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
     headline: "Outdoor Summer Concert — 3 friends saved it",
     sub: "Sat Jun 8 · 6pm",
-  },
-  {
-    id: "f2",
-    type: "photo",
-    author: "Maya Chan",
-    avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    place: "Bishop Bar",
-    sub: "Last night",
-    image:
-      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
   },
   {
     id: "fe-park-soccer",
@@ -853,17 +1357,6 @@ export const feedPosts: FeedPost[] = [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
     headline: "Karaoke night · K-Town",
     sub: "10pm",
-  },
-  {
-    id: "f3",
-    type: "photo",
-    author: "Jake Rivera",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-    place: "Prospect Park",
-    sub: "Park",
-    image:
-      "https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=400&h=300&fit=crop",
   },
   {
     id: "fe-dj",
@@ -957,11 +1450,17 @@ export const feedPosts: FeedPost[] = [
   },
 ];
 
-export const storyRow = [
-  { id: "me", label: "My Story", isAdd: true },
-  { id: "jake", label: "Jake", avatar: friends[0].avatar },
-  { id: "maya", label: "Maya", avatar: friends[1].avatar },
-  { id: "kai", label: "Kai", avatar: friends[3].avatar },
+/** Horizontal story rings: spots by event id (not user avatars). */
+export type FeedStoryRingItem =
+  | { id: string; isAdd: true; label?: string }
+  | { id: string; eventId: string };
+
+export const storyRow: FeedStoryRingItem[] = [
+  { id: "me", isAdd: true, label: "Post" },
+  { id: "sr-prospect", eventId: "prospect" },
+  { id: "sr-outdoor", eventId: "outdoor" },
+  { id: "sr-brunch", eventId: "brunch" },
+  { id: "sr-food-hall", eventId: "food-hall" },
 ];
 
 export const friendRequests = [

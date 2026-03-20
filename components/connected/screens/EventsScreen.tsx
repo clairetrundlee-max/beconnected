@@ -1,10 +1,21 @@
 "use client";
 
-import { Calendar, Check, MapPin, Music, Plus } from "lucide-react";
+import { Calendar, Camera, Check, MapPin, Music, Plus } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
 import { ConnectedStatusBar } from "@/components/connected/ConnectedStatusBar";
 import {
+  nextUserSpotPostId,
+  useSpotStoryPosts,
+} from "@/components/connected/SpotStoryPostsContext";
+import {
+  discoverEventById,
   discoverEvents,
   eventInvitePool,
   intentEvent,
@@ -21,7 +32,14 @@ type Props = {
   onCreateGroup?: (memberNames: string[]) => void;
 };
 
-const filters = ["All", "Nearby", "Music", "Food", "Outdoors", "Virtual"];
+const filters = [
+  "All",
+  "Today",
+  "Popular",
+  "Music",
+  "Food",
+  "Outdoors",
+];
 
 const pulseRing =
   "ring-4 ring-[#5a7d5a] ring-offset-2 ring-offset-[#f5f2eb] transition-shadow";
@@ -130,6 +148,40 @@ export function EventsScreen({
   const [sub, setSub] = useState<"discover" | "saved">("discover");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [pulseId, setPulseId] = useState<string | null>(null);
+  const { addUserSpotPost } = useSpotStoryPosts();
+  const captureInputRef = useRef<HTMLInputElement>(null);
+  const captureEventIdRef = useRef<string | null>(null);
+  const [storyToast, setStoryToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!storyToast) return;
+    const t = window.setTimeout(() => setStoryToast(null), 3200);
+    return () => window.clearTimeout(t);
+  }, [storyToast]);
+
+  const openHereNowCapture = (eventId: string) => {
+    captureEventIdRef.current = eventId;
+    captureInputRef.current?.click();
+  };
+
+  const onCaptureFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const eventId = captureEventIdRef.current;
+    captureEventIdRef.current = null;
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file || !eventId) return;
+    const imageUrl = URL.createObjectURL(file);
+    addUserSpotPost(eventId, {
+      id: nextUserSpotPostId(),
+      imageUrl,
+      authorName: "You",
+      timeLabel: "Just now",
+    });
+    const spot = discoverEventById(eventId);
+    setStoryToast(
+      `Photo added to ${spot?.title ?? "this spot"}’s feed stories`,
+    );
+  };
 
   useLayoutEffect(() => {
     if (!openSavedFromIntent) return;
@@ -303,37 +355,58 @@ export function EventsScreen({
         </>
       ) : (
         <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-28">
-          <div className="flex gap-2">
-            <span className="rounded-full bg-[#5a7d5a] px-4 py-2 text-xs font-bold text-white">
-              Saved
-            </span>
-            <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold ring-1 ring-[#e0dcd0]">
-              Your Wishlist
-            </span>
-          </div>
+          <input
+            ref={captureInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="sr-only"
+            aria-hidden
+            tabIndex={-1}
+            onChange={onCaptureFile}
+          />
+          {storyToast ? (
+            <p
+              className="rounded-xl bg-[#3d523d] px-3 py-2.5 text-center text-sm font-semibold text-white shadow-sm"
+              role="status"
+            >
+              {storyToast}
+            </p>
+          ) : null}
           {savedItems.map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-[#e8e4dc]"
+              className="rounded-xl bg-white p-3 ring-1 ring-[#e8e4dc]"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#eef4ee] text-lg">
-                {s.icon === "music" && "🎵"}
-                {s.icon === "bowl" && "🍜"}
-                {s.icon === "mountain" && "⛰️"}
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#eef4ee] text-lg">
+                  {s.icon === "music" && "🎵"}
+                  {s.icon === "bowl" && "🍜"}
+                  {s.icon === "mountain" && "⛰️"}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-neutral-900">{s.title}</p>
+                  <p className="text-xs text-neutral-500">{s.meta}</p>
+                </div>
+                <span
+                  className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold ${
+                    s.badgeTone === "green"
+                      ? "bg-[#c5d4c5] text-[#2d402d]"
+                      : "bg-neutral-200 text-neutral-600"
+                  }`}
+                >
+                  {s.badge}
+                </span>
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="font-bold text-neutral-900">{s.title}</p>
-                <p className="text-xs text-neutral-500">{s.meta}</p>
-              </div>
-              <span
-                className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold ${
-                  s.badgeTone === "green"
-                    ? "bg-[#c5d4c5] text-[#2d402d]"
-                    : "bg-neutral-200 text-neutral-600"
-                }`}
+              <button
+                type="button"
+                onClick={() => openHereNowCapture(s.eventId)}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-[#5a7d5a] py-2.5 text-sm font-bold text-white shadow-sm active:bg-[#4a6b4a]"
+                aria-label={`Here now — add a photo to feed stories for ${s.title}`}
               >
-                {s.badge}
-              </span>
+                <Camera className="h-4 w-4" strokeWidth={2.5} />
+                Here now
+              </button>
             </div>
           ))}
           <div className="rounded-xl bg-[#eef4ee] p-4 ring-1 ring-[#c5d4c5]">
