@@ -1,7 +1,6 @@
 export const user = {
-  name: "Claire M.",
-  avatar:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
+  name: "Claire Trundle",
+  avatar: "/profile/claire-trundle.png",
   sharing: "Sharing with Close Friends",
 };
 
@@ -15,12 +14,12 @@ export type UserAboutMeFields = {
 };
 
 export const userAboutMeDefaults: UserAboutMeFields = {
-  phone: "+1 (917) 555-0142",
-  email: "claire.m@email.com",
-  livingIn: "Brooklyn, NY",
-  hometown: "Boston, MA",
-  school: "Parsons School of Design",
-  job: "Product designer",
+  phone: "+1 (512) 555-0198",
+  email: "claire.trundle@email.com",
+  livingIn: "Austin, TX",
+  hometown: "Falls Church, VA",
+  school: "University of Texas at Austin",
+  job: "Marketing coordinator",
 };
 
 export type SettingsSocialPlatform =
@@ -53,19 +52,28 @@ export const userSocialDefaults: Record<
   SettingsSocialPlatform,
   UserSocialEntry
 > = {
-  instagram: { enabled: true, handle: "@clairem" },
-  x: { enabled: true, handle: "@clairem_nyc" },
+  instagram: { enabled: true, handle: "@clairetrundle" },
+  x: { enabled: true, handle: "@clairer_ATX" },
   tiktok: { enabled: false, handle: "" },
   snapchat: { enabled: false, handle: "" },
   facebook: { enabled: false, handle: "" },
-  youtube: { enabled: true, handle: "@ClaireMakes" },
+  youtube: { enabled: true, handle: "@ClaireTrundleATX" },
 };
 
-const A = {
-  jake: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-  maya: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-  alex: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
-  kai: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
+/** Friend avatars — week strip & profile slots (women 21–27) */
+const F = {
+  harper:
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+  sofia:
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop",
+  emma:
+    "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop",
+  riley:
+    "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=80&h=80&fit=crop",
+  mia:
+    "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop",
+  chloe:
+    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=80&h=80&fit=crop",
 };
 
 export type WeekDay = {
@@ -85,7 +93,7 @@ export const connectedCalendarEventsByDate: Record<
 > = {
   "2025-06-01": [
     {
-      title: "Sunday run club",
+      title: "Lady Bird Lake run club",
       time: "9am – 10:30am",
       calendar: "Apple Calendar",
     },
@@ -97,21 +105,21 @@ export const connectedCalendarEventsByDate: Record<
       calendar: "Google Calendar",
     },
     {
-      title: "1:1 with Maya",
+      title: "1:1 with Sofia",
       time: "3pm – 3:30pm",
       calendar: "Google Calendar",
     },
   ],
   "2025-06-07": [
     {
-      title: "Park pickup soccer",
+      title: "Pickup soccer · Zilker",
       time: "3pm – 5pm",
       calendar: "Apple Calendar",
     },
   ],
   "2025-06-08": [
     {
-      title: "Outdoor Summer Concert",
+      title: "Moody Amphitheater summer show",
       time: "6pm – 10pm",
       calendar: "Apple Calendar",
     },
@@ -132,7 +140,7 @@ export const connectedCalendarEventsByDate: Record<
   ],
   "2025-06-28": [
     {
-      title: "Flight to Chicago",
+      title: "Flight AUS → Denver",
       time: "7:15am departure",
       calendar: "Google Calendar",
     },
@@ -140,15 +148,15 @@ export const connectedCalendarEventsByDate: Record<
 };
 
 export const weekStrip: WeekDay[] = [
-  { day: "Sun", date: 20, month: "May", hoursFree: 5, detailId: "may-20", friendAvatars: [A.jake, A.maya, A.alex] },
-  { day: "Mon", date: 21, month: "May", hoursFree: 4, detailId: "may-21", friendAvatars: [A.jake, A.alex] },
-  { day: "Tue", date: 22, month: "May", hoursFree: 6, detailId: "may-22", friendAvatars: [A.maya, A.jake, A.kai] },
-  { day: "Wed", date: 23, month: "May", hoursFree: 6, detailId: "may-23", friendAvatars: [A.alex, A.maya] },
-  { day: "Thu", date: 24, month: "May", hoursFree: 8, detailId: "may-24", friendAvatars: [A.jake, A.maya, A.kai] },
-  { day: "Fri", date: 25, month: "May", hoursFree: 8, detailId: "may-25", friendAvatars: [A.jake, A.alex, A.kai] },
-  { day: "Sat", date: 1, month: "Jun", hoursFree: 11, detailId: "jun-1", friendAvatars: [A.jake, A.maya, A.alex] },
-  { day: "Sun", date: 2, month: "Jun", hoursFree: 9, detailId: "jun-2", friendAvatars: [A.maya, A.jake] },
-  { day: "Mon", date: 3, month: "Jun", hoursFree: 5, detailId: "jun-3", friendAvatars: [A.maya, A.alex] },
+  { day: "Sun", date: 20, month: "May", hoursFree: 5, detailId: "may-20", friendAvatars: [F.harper, F.sofia, F.emma] },
+  { day: "Mon", date: 21, month: "May", hoursFree: 4, detailId: "may-21", friendAvatars: [F.harper, F.emma] },
+  { day: "Tue", date: 22, month: "May", hoursFree: 6, detailId: "may-22", friendAvatars: [F.sofia, F.harper, F.mia] },
+  { day: "Wed", date: 23, month: "May", hoursFree: 6, detailId: "may-23", friendAvatars: [F.emma, F.sofia] },
+  { day: "Thu", date: 24, month: "May", hoursFree: 8, detailId: "may-24", friendAvatars: [F.harper, F.sofia, F.mia] },
+  { day: "Fri", date: 25, month: "May", hoursFree: 8, detailId: "may-25", friendAvatars: [F.harper, F.emma, F.mia] },
+  { day: "Sat", date: 1, month: "Jun", hoursFree: 11, detailId: "jun-1", friendAvatars: [F.harper, F.sofia, F.emma] },
+  { day: "Sun", date: 2, month: "Jun", hoursFree: 9, detailId: "jun-2", friendAvatars: [F.sofia, F.harper] },
+  { day: "Mon", date: 3, month: "Jun", hoursFree: 5, detailId: "jun-3", friendAvatars: [F.sofia, F.emma] },
 ];
 
 export type SlotFriend = { name: string; avatar: string; note?: string };
@@ -204,13 +212,13 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "2pm – 6pm",
         meta: "7 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop", note: "Free all afternoon" },
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop", note: "Free after 3pm" },
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop", note: "Free 2–5pm" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop", note: "Free all afternoon" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop", note: "Free after 3pm" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop", note: "Free 2–5pm" },
         ],
         slotEvents: [
-          { title: "Park pickup soccer", time: "3pm · Central Park", detail: "4 friends interested", eventId: "park-soccer" },
-          { title: "Rosemary Wine Bar", time: "5pm open", detail: "Happy hour", eventId: "rosemary" },
+          { title: "Pickup soccer · Zilker", time: "3pm · Great Lawn", detail: "4 friends interested", eventId: "park-soccer" },
+          { title: "June's All Day", time: "5pm open", detail: "South Congress", eventId: "rosemary" },
         ],
       },
       {
@@ -218,11 +226,11 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "7pm – 10pm",
         meta: "4 Friends Free",
         slotFriends: [
-          { name: "Kai Forbes", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop" },
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop" },
+          { name: "Mia Torres", avatar: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Comedy show — East Village", time: "8pm doors", detail: "2 friends going", eventId: "comedy" },
+          { title: "Esther's Follies", time: "8pm doors", detail: "6th Street", eventId: "comedy" },
         ],
       },
     ],
@@ -236,12 +244,12 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "5:30pm – 9pm",
         meta: "6 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" },
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Trivia night", time: "7pm · The Well", detail: "Nearby", eventId: "trivia" },
-          { title: "Prospect Park Concert", time: "5pm – 9pm", detail: "Music", eventId: "prospect" },
+          { title: "Trivia · Lavaca Street Bar", time: "7pm", detail: "Downtown", eventId: "trivia" },
+          { title: "Zilker Summer Sessions", time: "5pm – 9pm", detail: "Music", eventId: "prospect" },
         ],
       },
     ],
@@ -255,10 +263,10 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "12pm – 2pm",
         meta: "3 Friends Free",
         slotFriends: [
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Food hall pop-up", time: "12–3pm", detail: "Soho", eventId: "food-hall" },
+          { title: "Fareground", time: "12–3pm", detail: "2nd Street", eventId: "food-hall" },
         ],
       },
       {
@@ -266,11 +274,11 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "6pm – 11pm",
         meta: "5 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" },
-          { name: "Kai Forbes", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" },
+          { name: "Mia Torres", avatar: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Outdoor Summer Concert", time: "Sat Jun 8 · 6pm", detail: "Saved by 3 friends", eventId: "outdoor" },
+          { title: "Moody Amphitheater", time: "Sat Jun 8 · 6pm", detail: "Saved by 3 friends", eventId: "outdoor" },
         ],
       },
     ],
@@ -284,11 +292,11 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "11am – 3pm",
         meta: "5 Friends Free",
         slotFriends: [
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" },
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Museum free day", time: "11am–5pm", detail: "Brooklyn", eventId: "museum" },
+          { title: "Blanton free day", time: "11am–5pm", detail: "UT campus", eventId: "museum" },
         ],
       },
     ],
@@ -302,13 +310,13 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "5pm – midnight",
         meta: "9 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" },
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop" },
-          { name: "Kai Forbes", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop" },
+          { name: "Mia Torres", avatar: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Late jazz set", time: "9pm", detail: "Village", eventId: "jazz" },
-          { title: "Karaoke night", time: "10pm", detail: "K-Town", eventId: "karaoke" },
+          { title: "The Elephant Room", time: "9pm", detail: "Congress", eventId: "jazz" },
+          { title: "Karaoke · Elysium", time: "10pm", detail: "Red River", eventId: "karaoke" },
         ],
       },
     ],
@@ -322,11 +330,11 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "4pm – 7pm",
         meta: "8 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" },
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Rosemary Wine Bar", time: "Happy hour", detail: "1 friend interested", eventId: "rosemary" },
+          { title: "June's All Day", time: "Happy hour", detail: "SoCo", eventId: "rosemary" },
         ],
       },
       {
@@ -334,10 +342,10 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "9pm – 2am",
         meta: "12 Friends Free",
         slotFriends: [
-          { name: "Kai Forbes", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop" },
+          { name: "Mia Torres", avatar: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "DJ set — warehouse", time: "11pm", detail: "Bushwick", eventId: "dj" },
+          { title: "DJ set — Summit Rooftop", time: "11pm", detail: "Downtown", eventId: "dj" },
         ],
       },
     ],
@@ -351,25 +359,25 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "8am – 9pm",
         meta: "10 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop", note: "All day" },
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop", note: "Until 6pm" },
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" },
-          { name: "Kai Forbes", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop", note: "All day" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop", note: "Until 6pm" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" },
+          { name: "Mia Torres", avatar: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Prospect Park Concert", time: "5pm – 9pm", detail: "2 friends going", eventId: "prospect" },
-          { title: "Farmers market", time: "9am – 2pm", detail: "Grand Army Plaza", eventId: "farmers" },
-          { title: "Yoga in the park", time: "10am", detail: "Free", eventId: "yoga" },
+          { title: "Zilker Summer Sessions", time: "5pm – 9pm", detail: "2 friends going", eventId: "prospect" },
+          { title: "SFC Farmers' Market", time: "9am – 2pm", detail: "Republic Square", eventId: "farmers" },
+          { title: "Yoga · Mueller Lake Park", time: "10am", detail: "Free", eventId: "yoga" },
         ],
       },
       {
-        title: "NYC Train",
+        title: "CapMetro + AUS",
         time: "9pm – 10pm",
         meta: "Event",
         muted: true,
         slotFriends: [],
         slotEvents: [
-          { title: "NYC Train — Penn to Upstate", time: "9:15pm departure", detail: "Your reservation", eventId: "nyc-train" },
+          { title: "CapMetro + Airport Flyer", time: "9:15pm departure", detail: "Your reservation", eventId: "nyc-train" },
         ],
       },
     ],
@@ -383,11 +391,11 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "9am – 1pm",
         meta: "8 Friends Free",
         slotFriends: [
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop" },
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Sunday run club", time: "9am", detail: "Prospect Park", eventId: "run-club" },
+          { title: "Lady Bird Lake run club", time: "9am", detail: "Boardwalk", eventId: "run-club" },
         ],
       },
       {
@@ -395,10 +403,10 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "11am – 2pm",
         meta: "3 Friends Free",
         slotFriends: [
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Bottomless brunch — Bishop Bar", time: "12pm", detail: "2 spots left", eventId: "brunch" },
+          { title: "Brunch · Josephine House", time: "12pm", detail: "2 spots left", eventId: "brunch" },
         ],
       },
       {
@@ -406,12 +414,12 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "5pm – 11pm",
         meta: "12 Friends Free",
         slotFriends: [
-          { name: "Jake Rivera", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" },
-          { name: "Kai Forbes", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop" },
+          { name: "Harper Walsh", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" },
+          { name: "Mia Torres", avatar: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Sunset picnic", time: "6pm", detail: "Brooklyn Bridge Park", eventId: "sunset" },
-          { title: "Open-air movie", time: "8:30pm", detail: "Skyline Drive-In", eventId: "movie" },
+          { title: "Sunset · Auditorium Shores", time: "6pm", detail: "Lady Bird Lake", eventId: "sunset" },
+          { title: "Blue Starlite Drive-In", time: "8:30pm", detail: "Mueller", eventId: "movie" },
         ],
       },
     ],
@@ -425,11 +433,11 @@ export const profileDaySections: ProfileDaySection[] = [
         time: "6pm – 10pm",
         meta: "6 Friends Free",
         slotFriends: [
-          { name: "Maya Chan", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop" },
-          { name: "Alex Park", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" },
+          { name: "Sofia Reyes", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop" },
+          { name: "Emma Nguyen", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" },
         ],
         slotEvents: [
-          { title: "Book club", time: "7pm", detail: "Cafe nearby", eventId: "book" },
+          { title: "BookPeople reading", time: "7pm", detail: "North Lamar", eventId: "book" },
         ],
       },
     ],
@@ -652,85 +660,117 @@ export type Friend = {
 export const friends: Friend[] = [
   {
     id: "1",
-    name: "Jake Rivera",
+    name: "Harper Walsh",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
     status: "Free now · until 10pm",
     free: true,
-    phone: "+12125550101",
+    phone: "+15125550101",
     isNew: true,
     emoji: "🎵",
     profile: {
-      livingIn: "Brooklyn, NY",
-      homeTown: "Austin, TX",
-      email: "jake.rivera@email.com",
-      instagram: "@jakerivera",
-      x: "@jakeriv",
-      tiktok: "@jakeplays",
-      snapchat: "jake.r",
-      facebook: "jake.rivera.music",
-      youtube: "@JakeRiveraVlogs",
-      phone: "+1 (212) 555-0101",
-      school: "NYU",
-      job: "Product designer",
+      livingIn: "Austin, TX",
+      homeTown: "Houston, TX",
+      email: "harper.walsh@email.com",
+      instagram: "@harperatx",
+      x: "@harperwalsh",
+      tiktok: "@harperwalsh",
+      school: "UT Austin",
+      job: "Graphic designer",
       zodiac: "Leo",
     },
   },
   {
     id: "2",
-    name: "Maya Chan",
+    name: "Sofia Reyes",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop",
     status: "Free from 6pm · open",
     free: true,
-    phone: "+12125550102",
+    phone: "+15125550102",
     emoji: "❤️",
     profile: {
-      livingIn: "Manhattan, NY",
-      homeTown: "San Francisco, CA",
-      email: "maya.chan@email.com",
-      instagram: "@mayac",
-      x: "@mayachan",
-      school: "Columbia University",
-      job: "Software engineer",
+      livingIn: "Austin, TX",
+      homeTown: "San Antonio, TX",
+      email: "sofia.reyes@email.com",
+      instagram: "@sofiainatx",
+      x: "@sofiareyes",
+      school: "UT Austin",
+      job: "Nursing student",
       zodiac: "Pisces",
     },
   },
   {
     id: "3",
-    name: "Alex Park",
+    name: "Emma Nguyen",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop",
     status: "Busy all day",
     free: false,
-    phone: "+12125550103",
-    emoji: "🍜",
+    phone: "+15125550103",
+    emoji: "🌮",
     profile: {
-      livingIn: "Jersey City, NJ",
-      homeTown: "Seoul, South Korea",
-      email: "alex.park@email.com",
-      tiktok: "@alexeats",
-      job: "Line cook",
+      livingIn: "Austin, TX",
+      homeTown: "Dallas, TX",
+      email: "emma.nguyen@email.com",
+      tiktok: "@emmaeatsatx",
+      job: "Barista · Patika",
     },
   },
   {
     id: "4",
-    name: "Kai Forbes",
+    name: "Mia Torres",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=100&h=100&fit=crop",
     status: "Free now · until 8pm",
     free: true,
-    phone: "+12125550104",
+    phone: "+15125550104",
     emoji: "⭐",
     profile: {
-      livingIn: "Los Angeles, CA",
-      homeTown: "Portland, OR",
-      email: "kai.forbes@email.com",
-      instagram: "@kaiforbes",
-      youtube: "KaiForbes",
-      phone: "+1 (212) 555-0104",
-      school: "UCLA",
+      livingIn: "Austin, TX",
+      homeTown: "El Paso, TX",
+      email: "mia.torres@email.com",
+      instagram: "@miatorres",
+      youtube: "MiaInAustin",
+      school: "St. Edward's University",
       zodiac: "Sagittarius",
+    },
+  },
+  {
+    id: "5",
+    name: "Riley Brooks",
+    avatar:
+      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100&h=100&fit=crop",
+    status: "Free after 4pm · Rainey tonight?",
+    free: true,
+    phone: "+15125550105",
+    emoji: "🌿",
+    profile: {
+      livingIn: "Austin, TX",
+      homeTown: "Falls Church, VA",
+      email: "riley.brooks@email.com",
+      instagram: "@rileybrooks_atx",
+      job: "UX researcher",
+      zodiac: "Virgo",
+    },
+  },
+  {
+    id: "6",
+    name: "Chloe Bennett",
+    avatar:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop",
+    status: "Free · want to Barton Springs?",
+    free: true,
+    phone: "+15125550106",
+    emoji: "☀️",
+    profile: {
+      livingIn: "Austin, TX",
+      homeTown: "Phoenix, AZ",
+      email: "chloe.bennett@email.com",
+      instagram: "@chloebtx",
+      school: "UT Austin",
+      job: "Barre instructor",
+      zodiac: "Gemini",
     },
   },
 ];
@@ -739,28 +779,16 @@ export const friends: Friend[] = [
 export const eventInvitePool: { id: string; name: string; avatar: string }[] = [
   ...friends.map((f) => ({ id: f.id, name: f.name, avatar: f.avatar })),
   {
-    id: "inv-5",
-    name: "Riley Chen",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
-  },
-  {
-    id: "inv-6",
-    name: "Marcus Webb",
-    avatar:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop",
-  },
-  {
     id: "inv-7",
-    name: "Sofia Ortiz",
+    name: "Zoe Mitchell",
     avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop",
   },
   {
     id: "inv-8",
-    name: "Dev Patel",
+    name: "Natalie Cruz",
     avatar:
-      "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop",
   },
 ];
 
@@ -783,8 +811,8 @@ export type EventItem = {
 export const discoverEvents: EventItem[] = [
   {
     id: "prospect",
-    title: "Prospect Park Concert",
-    subtitle: "2 friends going",
+    title: "Zilker Summer Sessions",
+    subtitle: "2 friends going · Great Lawn",
     time: "5pm – 9pm",
     friendsGoing: 2,
     image:
@@ -792,8 +820,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "rosemary",
-    title: "Rosemary Wine Bar",
-    subtitle: "1 friend interested · Open now",
+    title: "June's All Day",
+    subtitle: "South Congress · Open now",
     time: "Happy hour",
     friendsGoing: 1,
     image:
@@ -803,17 +831,17 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "park-soccer",
-    title: "Park pickup soccer",
+    title: "Pickup soccer · Zilker",
     subtitle: "4 friends interested",
-    time: "3pm · Central Park",
+    time: "3pm · Great Lawn",
     friendsGoing: 4,
     image:
       "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=240&fit=crop",
   },
   {
     id: "comedy",
-    title: "Comedy show — East Village",
-    subtitle: "2 friends going",
+    title: "Esther's Follies",
+    subtitle: "2 friends going · 6th Street",
     time: "8pm doors",
     friendsGoing: 2,
     image:
@@ -821,8 +849,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "trivia",
-    title: "Trivia night · The Well",
-    subtitle: "Nearby",
+    title: "Trivia · Lavaca Street Bar",
+    subtitle: "Downtown Austin",
     time: "7pm",
     friendsGoing: 0,
     image:
@@ -830,8 +858,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "food-hall",
-    title: "Food hall pop-up",
-    subtitle: "Soho",
+    title: "Fareground food hall",
+    subtitle: "2nd Street District",
     time: "12–3pm",
     friendsGoing: 0,
     image:
@@ -839,8 +867,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "museum",
-    title: "Museum free day",
-    subtitle: "Brooklyn",
+    title: "Blanton Museum free day",
+    subtitle: "UT campus · Austin",
     time: "11am–5pm",
     friendsGoing: 0,
     image:
@@ -848,8 +876,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "jazz",
-    title: "Late jazz set",
-    subtitle: "Village",
+    title: "The Elephant Room",
+    subtitle: "Congress Ave jazz",
     time: "9pm",
     friendsGoing: 0,
     image:
@@ -857,8 +885,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "karaoke",
-    title: "Karaoke night",
-    subtitle: "K-Town",
+    title: "Karaoke · Elysium",
+    subtitle: "Red River Cultural District",
     time: "10pm",
     friendsGoing: 0,
     image:
@@ -866,8 +894,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "dj",
-    title: "DJ set — warehouse",
-    subtitle: "Bushwick",
+    title: "DJ set — Summit Rooftop",
+    subtitle: "Downtown views",
     time: "11pm",
     friendsGoing: 0,
     image:
@@ -875,8 +903,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "farmers",
-    title: "Farmers market",
-    subtitle: "Grand Army Plaza",
+    title: "SFC Farmers' Market",
+    subtitle: "Republic Square",
     time: "9am – 2pm",
     friendsGoing: 0,
     image:
@@ -884,8 +912,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "yoga",
-    title: "Yoga in the park",
-    subtitle: "Free",
+    title: "Yoga on the lawn",
+    subtitle: "Mueller Lake Park · Free",
     time: "10am",
     friendsGoing: 0,
     image:
@@ -893,8 +921,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "nyc-train",
-    title: "NYC Train — Penn to Upstate",
-    subtitle: "Your reservation",
+    title: "CapMetro + Airport Flyer",
+    subtitle: "Your AUS trip leg",
     time: "9:15pm departure",
     friendsGoing: 0,
     image:
@@ -902,8 +930,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "run-club",
-    title: "Sunday run club",
-    subtitle: "Prospect Park",
+    title: "Lady Bird Lake run club",
+    subtitle: "Boardwalk loop",
     time: "9am",
     friendsGoing: 0,
     image:
@@ -911,8 +939,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "brunch",
-    title: "Bottomless brunch — Bishop Bar",
-    subtitle: "2 spots left",
+    title: "Brunch · Josephine House",
+    subtitle: "Clarksville · 2 spots left",
     time: "12pm",
     friendsGoing: 0,
     image:
@@ -920,8 +948,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "sunset",
-    title: "Sunset picnic",
-    subtitle: "Brooklyn Bridge Park",
+    title: "Sunset at Auditorium Shores",
+    subtitle: "Lady Bird Lake",
     time: "6pm",
     friendsGoing: 0,
     image:
@@ -929,8 +957,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "movie",
-    title: "Open-air movie — Skyline Drive-In",
-    subtitle: "Tonight",
+    title: "Blue Starlite Mini Drive-In",
+    subtitle: "Mueller · Tonight",
     time: "8:30pm",
     friendsGoing: 0,
     image:
@@ -938,8 +966,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "book",
-    title: "Book club",
-    subtitle: "Cafe nearby",
+    title: "BookPeople reading",
+    subtitle: "North Lamar",
     time: "7pm",
     friendsGoing: 0,
     image:
@@ -947,8 +975,8 @@ export const discoverEvents: EventItem[] = [
   },
   {
     id: "outdoor",
-    title: "Outdoor Summer Concert",
-    subtitle: "3 friends saved it",
+    title: "Moody Amphitheater summer show",
+    subtitle: "3 friends saved it · Waterloo Park",
     time: "Sat Jun 8 · 6pm",
     friendsGoing: 3,
     image:
@@ -958,9 +986,9 @@ export const discoverEvents: EventItem[] = [
 
 export const intentEvent = {
   id: "outdoor",
-  title: "Outdoor Summer Concert",
-  dateLine: "Sat June 8 · 6pm",
-  distance: "12mi",
+  title: "Moody Amphitheater summer show",
+  dateLine: "Sat June 8 · 6pm · Waterloo Park",
+  distance: "3mi · Downtown Austin",
   ticket: "Tickets $25 · Doors 5:30pm · All ages welcome.",
   image:
     "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=280&fit=crop",
@@ -983,7 +1011,7 @@ export const savedItems: SavedItem[] = [
   {
     id: "s1",
     eventId: "outdoor",
-    title: "Outdoor Concert",
+    title: "Moody Amphitheater",
     meta: "Sat Jun 8 · 6pm · 4 going",
     icon: "music",
     badge: "Planned!",
@@ -992,7 +1020,7 @@ export const savedItems: SavedItem[] = [
   {
     id: "s2",
     eventId: "food-hall",
-    title: "Ramen Night",
+    title: "Fareground lunch crawl",
     meta: "Anytime · 2 friends also saved",
     icon: "bowl",
     badge: "Rally?",
@@ -1001,7 +1029,7 @@ export const savedItems: SavedItem[] = [
   {
     id: "s3",
     eventId: "run-club",
-    title: "Catskills Hike",
+    title: "Greenbelt hike weekend",
     meta: "Someday · 5 friends interested",
     icon: "mountain",
     badge: "Saved",
@@ -1039,37 +1067,37 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-pr-1",
       "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "2d ago",
     ),
     _spot(
       "sp-pr-2",
       "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "1w ago",
     ),
     _spot(
       "sp-pr-3",
       "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "2w ago",
     ),
     _spot(
       "sp-pr-4",
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
-      "Alex Park",
+      "Emma Nguyen",
       "3w ago",
     ),
     _spot(
       "sp-pr-5",
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop",
-      "Claire M.",
+      "Claire Trundle",
       "1mo ago",
     ),
     _spot(
       "sp-pr-6",
       "https://images.unsplash.com/photo-1429963354344-1fa4872f3157?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "1mo ago",
     ),
   ],
@@ -1077,19 +1105,19 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-od-1",
       "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "Yesterday",
     ),
     _spot(
       "sp-od-2",
       "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "3d ago",
     ),
     _spot(
       "sp-od-3",
       "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "1w ago",
     ),
   ],
@@ -1097,25 +1125,25 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-ro-1",
       "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "Yesterday",
     ),
     _spot(
       "sp-ro-2",
       "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "4d ago",
     ),
     _spot(
       "sp-ro-3",
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "1w ago",
     ),
     _spot(
       "sp-ro-4",
       "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=300&h=300&fit=crop",
-      "Alex Park",
+      "Emma Nguyen",
       "2w ago",
     ),
   ],
@@ -1123,19 +1151,19 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-br-1",
       "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "Last night",
     ),
     _spot(
       "sp-br-2",
       "https://images.unsplash.com/photo-1555992336-fb0d29498d13?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "3d ago",
     ),
     _spot(
       "sp-br-3",
       "https://images.unsplash.com/photo-1544148103-07737bfbad88?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "1w ago",
     ),
   ],
@@ -1143,25 +1171,25 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-fh-1",
       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "5d ago",
     ),
     _spot(
       "sp-fh-2",
       "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "1w ago",
     ),
     _spot(
       "sp-fh-3",
       "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300&h=300&fit=crop",
-      "Alex Park",
+      "Emma Nguyen",
       "2w ago",
     ),
     _spot(
       "sp-fh-4",
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "3w ago",
     ),
   ],
@@ -1169,19 +1197,19 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-tr-1",
       "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "2d ago",
     ),
     _spot(
       "sp-tr-2",
       "https://images.unsplash.com/photo-1585699324551-f6f0bb35f28f?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "1w ago",
     ),
     _spot(
       "sp-tr-3",
       "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "2w ago",
     ),
   ],
@@ -1189,19 +1217,19 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-ps-1",
       "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=300&fit=crop",
-      "Alex Park",
+      "Emma Nguyen",
       "Today",
     ),
     _spot(
       "sp-ps-2",
       "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "3d ago",
     ),
     _spot(
       "sp-ps-3",
       "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=300&h=300&fit=crop",
-      "Kai Forbes",
+      "Mia Torres",
       "1w ago",
     ),
   ],
@@ -1209,13 +1237,13 @@ export const feedSpotPastPostsByEventId: Record<string, FeedSpotPastPost[]> = {
     _spot(
       "sp-rc-1",
       "https://images.unsplash.com/photo-1552674605-5d2178b85608?w=300&h=300&fit=crop",
-      "Maya Chan",
+      "Sofia Reyes",
       "Sun",
     ),
     _spot(
       "sp-rc-2",
       "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=300&h=300&fit=crop",
-      "Jake Rivera",
+      "Harper Walsh",
       "Last week",
     ),
   ],
@@ -1262,190 +1290,189 @@ export const feedPosts: FeedPost[] = [
     id: "fe-prospect",
     type: "event",
     eventId: "prospect",
-    author: "Jake Rivera",
+    author: "Harper Walsh",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-    headline: "Jake is going to Prospect Park Concert",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+    headline: "Harper is going to Zilker Summer Sessions",
     sub: "5pm – 9pm · 2 others interested",
   },
   {
     id: "fe-rosemary",
     type: "event",
     eventId: "rosemary",
-    author: "Maya Chan",
+    author: "Sofia Reyes",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    headline: "Maya · Rosemary Wine Bar tonight?",
-    sub: "Happy hour · Open now",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop",
+    headline: "Sofia · June's All Day tonight?",
+    sub: "Happy hour · South Congress",
   },
   {
     id: "fe-outdoor",
     type: "event",
     eventId: "outdoor",
-    author: "Kai Forbes",
+    author: "Mia Torres",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
-    headline: "Outdoor Summer Concert — 3 friends saved it",
-    sub: "Sat Jun 8 · 6pm",
+      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop",
+    headline: "Moody Amphitheater — 3 friends saved it",
+    sub: "Sat Jun 8 · 6pm · Waterloo Park",
   },
   {
     id: "fe-park-soccer",
     type: "event",
     eventId: "park-soccer",
-    author: "Alex Park",
+    author: "Emma Nguyen",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
-    headline: "Park pickup soccer · Central Park",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop",
+    headline: "Pickup soccer · Zilker Great Lawn",
     sub: "3pm · 4 friends interested",
   },
   {
     id: "fe-comedy",
     type: "event",
     eventId: "comedy",
-    author: "Jake Rivera",
+    author: "Harper Walsh",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-    headline: "Comedy show — East Village",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+    headline: "Esther's Follies · 6th Street",
     sub: "8pm doors · 2 going",
   },
   {
     id: "fe-trivia",
     type: "event",
     eventId: "trivia",
-    author: "Maya Chan",
+    author: "Sofia Reyes",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    headline: "Trivia night at The Well",
-    sub: "7pm · Nearby",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop",
+    headline: "Trivia at Lavaca Street Bar",
+    sub: "7pm · Downtown",
   },
   {
     id: "fe-food-hall",
     type: "event",
     eventId: "food-hall",
-    author: "Kai Forbes",
+    author: "Mia Torres",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
-    headline: "Food hall pop-up · Soho",
+      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop",
+    headline: "Fareground · downtown food hall",
     sub: "12–3pm",
   },
   {
     id: "fe-museum",
     type: "event",
     eventId: "museum",
-    author: "Alex Park",
+    author: "Emma Nguyen",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
-    headline: "Museum free day · Brooklyn",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop",
+    headline: "Blanton free day · UT campus",
     sub: "11am–5pm",
   },
   {
     id: "fe-jazz",
     type: "event",
     eventId: "jazz",
-    author: "Maya Chan",
+    author: "Sofia Reyes",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    headline: "Late jazz · Village",
-    sub: "9pm",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop",
+    headline: "The Elephant Room · late set",
+    sub: "9pm · Congress",
   },
   {
     id: "fe-karaoke",
     type: "event",
     eventId: "karaoke",
-    author: "Jake Rivera",
+    author: "Harper Walsh",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-    headline: "Karaoke night · K-Town",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+    headline: "Karaoke · Elysium on Red River",
     sub: "10pm",
   },
   {
     id: "fe-dj",
     type: "event",
     eventId: "dj",
-    author: "Kai Forbes",
+    author: "Mia Torres",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
-    headline: "DJ set — Bushwick warehouse",
+      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop",
+    headline: "DJ set — Summit Rooftop",
     sub: "11pm",
   },
   {
     id: "fe-farmers",
     type: "event",
     eventId: "farmers",
-    author: "Maya Chan",
+    author: "Sofia Reyes",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    headline: "Farmers market · Grand Army Plaza",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop",
+    headline: "SFC Farmers' Market · Republic Square",
     sub: "9am – 2pm",
   },
   {
     id: "fe-yoga",
     type: "event",
     eventId: "yoga",
-    author: "Alex Park",
+    author: "Emma Nguyen",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
-    headline: "Yoga in the park",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop",
+    headline: "Yoga · Mueller Lake Park",
     sub: "10am · Free",
   },
   {
     id: "fe-nyc-train",
     type: "event",
     eventId: "nyc-train",
-    author: "Claire M.",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop",
-    headline: "NYC Train — Penn to Upstate",
+    author: "Claire Trundle",
+    avatar: "/profile/claire-trundle.png",
+    headline: "CapMetro + ride to AUS",
     sub: "9:15pm departure",
   },
   {
     id: "fe-run-club",
     type: "event",
     eventId: "run-club",
-    author: "Jake Rivera",
+    author: "Harper Walsh",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-    headline: "Sunday run club · Prospect Park",
-    sub: "9am",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+    headline: "Lady Bird Lake run club",
+    sub: "9am · Boardwalk",
   },
   {
     id: "fe-brunch",
     type: "event",
     eventId: "brunch",
-    author: "Maya Chan",
+    author: "Sofia Reyes",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    headline: "Bottomless brunch — Bishop Bar",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=80&h=80&fit=crop",
+    headline: "Brunch · Josephine House",
     sub: "12pm · 2 spots left",
   },
   {
     id: "fe-sunset",
     type: "event",
     eventId: "sunset",
-    author: "Kai Forbes",
+    author: "Mia Torres",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
-    headline: "Sunset picnic · Brooklyn Bridge Park",
+      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=80&h=80&fit=crop",
+    headline: "Sunset · Auditorium Shores",
     sub: "6pm",
   },
   {
     id: "fe-movie",
     type: "event",
     eventId: "movie",
-    author: "Alex Park",
+    author: "Emma Nguyen",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
-    headline: "Open-air movie · Skyline Drive-In",
-    sub: "8:30pm",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop",
+    headline: "Blue Starlite Mini Drive-In",
+    sub: "8:30pm · Mueller",
   },
   {
     id: "fe-book",
     type: "event",
     eventId: "book",
-    author: "Maya Chan",
+    author: "Riley Brooks",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
-    headline: "Book club · cafe nearby",
+      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=80&h=80&fit=crop",
+    headline: "BookPeople reading · North Lamar",
     sub: "7pm",
   },
 ];
@@ -1466,14 +1493,14 @@ export const storyRow: FeedStoryRingItem[] = [
 export const friendRequests = [
   {
     id: "fr1",
-    name: "Sam Lee",
+    name: "Amelia Foster",
     avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop",
   },
   {
     id: "fr2",
-    name: "Jordan Kim",
+    name: "Lauren Diaz",
     avatar:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=80&h=80&fit=crop",
   },
 ];

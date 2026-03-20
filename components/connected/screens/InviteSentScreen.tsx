@@ -23,10 +23,10 @@ export function InviteSentScreen({ onClose, onImIn }: Props) {
             Push notification
           </p>
           <p className="mt-1 font-semibold">
-            Claire wants to go to Outdoor Concert
+            Claire wants to go to Moody Amphitheater
           </p>
           <p className="mt-1 text-sm text-neutral-300">
-            Saturday June 8 · 6pm — You&apos;re free that day. Jake & Maya are
+            Saturday June 8 · 6pm — You&apos;re free that day. Harper & Sofia are
             also going.
           </p>
         </div>

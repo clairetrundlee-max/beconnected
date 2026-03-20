@@ -12,31 +12,31 @@ type Props = {
 
 const interested = [
   {
-    name: "Jake Rivera",
+    name: "Harper Walsh",
     sub: "Free all day.",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
   },
   {
-    name: "Maya Chen",
+    name: "Sofia Reyes",
     sub: "Interested · Free 3pm onward.",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop",
   },
 ];
 
 const alsoFree = [
   {
-    name: "Kai Torres",
+    name: "Mia Torres",
     sub: "Free all day · Haven't seen this.",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=100&h=100&fit=crop",
   },
   {
-    name: "Tom Nguyen",
+    name: "Emma Nguyen",
     sub: "Free evening · Loves live music.",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop",
   },
 ];
 

@@ -112,7 +112,7 @@ export function IntentEventDetailScreen({
 
         <div className="mt-4 rounded-xl bg-[#eef4ee] p-4 ring-1 ring-[#c5d4c5]">
           <p className="text-sm text-neutral-700">
-            <span className="font-semibold">Jake also saved this!</span> You&apos;re
+            <span className="font-semibold">Harper also saved this!</span> You&apos;re
             both free June 8 – invite him?
           </p>
           <button

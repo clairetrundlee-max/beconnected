@@ -414,7 +414,7 @@ export function EventsScreen({
               Friends with matching saves
             </p>
             <p className="mt-1 text-sm text-neutral-600">
-              Jake + Maya also saved Ramen Night — 3 of you are free next Tuesday.
+              Harper + Sofia also saved Fareground — 3 of you are free next Tuesday.
             </p>
             <button
               type="button"
